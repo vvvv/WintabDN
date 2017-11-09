@@ -416,7 +416,7 @@ namespace FormExtTestApp
                         (byte)functionIndex_I,
                         (ushort)EWTExtensionTabletProperty.TABLET_PROPERTY_OVERRIDE,
                         propOverride))
-                    { throw new Exception("Oops - FAILED ControlPropertySet for TABLET_PROPERTY_OVERRIDE"); }
+                    { Debug.WriteLine("Oops - FAILED ControlPropertySet for TABLET_PROPERTY_OVERRIDE"); }
 
                     // Set the control name.
                     if (!CWintabExtensions.ControlPropertySet(
@@ -427,7 +427,7 @@ namespace FormExtTestApp
                         (byte)functionIndex_I,
                         (ushort)EWTExtensionTabletProperty.TABLET_PROPERTY_OVERRIDE_NAME,
                         ctrlname))
-                    { throw new Exception("Oops - FAILED ControlPropertySet for TABLET_PROPERTY_OVERRIDE_NAME"); }
+                    { Debug.WriteLine("Oops - FAILED ControlPropertySet for TABLET_PROPERTY_OVERRIDE_NAME"); }
 
                     // Get the location of the control
                     if (!CWintabExtensions.ControlPropertyGet(
@@ -438,7 +438,7 @@ namespace FormExtTestApp
                         (byte)functionIndex_I,
                         (ushort)EWTExtensionTabletProperty.TABLET_PROPERTY_LOCATION,
                         ref ctrlLocation))
-                    { throw new Exception("Oops - FAILED ControlPropertyGet for TABLET_PROPERTY_LOCATION"); }
+                    { Debug.WriteLine("Oops - FAILED ControlPropertyGet for TABLET_PROPERTY_LOCATION"); }
 
                     if (!CWintabExtensions.ControlPropertyGet(
                         mLogContext.HCtx,
@@ -448,7 +448,7 @@ namespace FormExtTestApp
                         (byte)functionIndex_I,
                         (ushort)EWTExtensionTabletProperty.TABLET_PROPERTY_MIN,
                         ref ctrlMinRange))
-                    { throw new Exception("Oops - FAILED ControlPropertyGet for TABLET_PROPERTY_MIN"); }
+                    { Debug.WriteLine("Oops - FAILED ControlPropertyGet for TABLET_PROPERTY_MIN"); }
 
                     if (!CWintabExtensions.ControlPropertyGet(
                         mLogContext.HCtx,
@@ -458,7 +458,7 @@ namespace FormExtTestApp
                         (byte)functionIndex_I,
                         (ushort)EWTExtensionTabletProperty.TABLET_PROPERTY_MAX,
                         ref ctrlMaxRange))
-                    { throw new Exception("Oops - FAILED ControlPropertyGet for TABLET_PROPERTY_MAX"); }
+                    { Debug.WriteLine("Oops - FAILED ControlPropertyGet for TABLET_PROPERTY_MAX"); }
 
                     // Set tablet OLED with icon (if supported by the tablet).
                     // Ignore return value for now.
