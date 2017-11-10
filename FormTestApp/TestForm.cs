@@ -111,7 +111,6 @@ namespace FormTestApp
                 Test_MaxPressure();
                 Test_GetDataPackets(1);
                 Test_QueryDataPackets();     // opens up another form
-
             }
             else
             {
@@ -713,10 +712,10 @@ namespace FormTestApp
                 if (m_maxPkts == 1)
                 {
                     uint pktID = (uint)eventArgs_I.Message.WParam;
-                    WintabPacket pkt = m_wtData.GetDataPacket((uint)eventArgs_I.Message.LParam, pktID);
+                    WintabPacket pkt = m_wtData.GetDataPacket(eventArgs_I.Message.LParam, pktID);
                     //DEPRECATED WintabPacket pkt = m_wtData.GetDataPacket(pktID);
 
-                    if (pkt.pkContext != 0)
+                    if (pkt.pkContext.IsValid)
                     {
                         m_pkX = pkt.pkX;
                         m_pkY = pkt.pkY;

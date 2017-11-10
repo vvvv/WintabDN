@@ -20,8 +20,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 using System;
 using System.Windows.Forms;
-using System.Collections.Generic;
-using System.Text;
 using System.Runtime.InteropServices;
 
 namespace WintabDN
@@ -29,7 +27,7 @@ namespace WintabDN
     /// <summary>
     /// Managed version of AXIS struct.
     /// </summary>
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     public struct WintabAxis
     {
         /// <summary>
@@ -56,7 +54,7 @@ namespace WintabDN
     /// <summary>
     /// Array of WintabAxis objects.
     /// </summary>
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     public struct WintabAxisArray
     {
         // \cond IGNORED_BY_DOXYGEN
@@ -115,7 +113,7 @@ namespace WintabDN
     /// application will get, how they will be processed, and how they will be delivered to the 
     /// application or to Windows itself.
     /// </summary>
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     public struct WintabLogContext
     {
         // \cond IGNORED_BY_DOXYGEN
@@ -164,7 +162,7 @@ namespace WintabDN
     {
         // Context data.
         private WintabLogContext   m_logContext = new WintabLogContext();
-        private HCTX                m_hCTX = 0;
+        private HCTX                m_hCTX = HCTX.Zero;
 
         /// <summary>
         /// Default constructor sets all data bits to be captured.
@@ -200,7 +198,7 @@ namespace WintabDN
         {
             try
             { 
-                m_hCTX = CWintabFuncs.WTOpenA(hwnd_I, ref m_logContext, enable_I);
+                m_hCTX = CWintabFuncs.WTOpen(hwnd_I, ref m_logContext, enable_I);
             }
             catch (Exception ex)
             {
@@ -222,14 +220,14 @@ namespace WintabDN
 
             try
             {
-                m_hCTX = CWintabFuncs.WTOpenA(hwnd, ref m_logContext, true);
+                m_hCTX = CWintabFuncs.WTOpen(hwnd, ref m_logContext, true);
             }
             catch (Exception ex)
             {
                 MessageBox.Show("FAILED OpenContext: " + ex.ToString());
             }
 
-            return (m_hCTX > 0);
+            return m_hCTX.IsValid;
         }
 
         /// <summary>
@@ -242,13 +240,13 @@ namespace WintabDN
 
             try
             {
-                if (m_hCTX == 0)
+                if (!m_hCTX.IsValid)
                 {
                     throw new Exception("CloseContext: invalid context");
                 }
 
                 status = CWintabFuncs.WTClose(m_hCTX);
-                m_hCTX = 0;
+                m_hCTX = HCTX.Zero;
                 m_logContext = new WintabLogContext();
             }
             catch (Exception ex)
@@ -270,7 +268,7 @@ namespace WintabDN
 
             try
             {
-                if (m_hCTX == 0)
+                if (!m_hCTX.IsValid)
                 {
                     throw new Exception("EnableContext: invalid context");
                 }
@@ -296,7 +294,7 @@ namespace WintabDN
 
             try
             {
-                if (m_hCTX == 0)
+                if (!m_hCTX.IsValid)
                 {
                     throw new Exception("EnableContext: invalid context");
                 }

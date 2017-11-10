@@ -44,7 +44,7 @@ namespace WintabDN
 
             try
             {
-                status = (CWintabFuncs.WTInfoA(0, 0, buf) > 0);
+                status = (CWintabFuncs.WTInfo(0, 0, buf) > 0);
             }
             catch (Exception ex)
             {
@@ -65,7 +65,7 @@ namespace WintabDN
 
             try
             {
-                int size = (int)CWintabFuncs.WTInfoA(
+                int size = (int)CWintabFuncs.WTInfo(
                     (uint)EWTICategoryIndex.WTI_DEVICES, 
                     (uint)EWTIDevicesIndex.DVC_NAME, buf);
 
@@ -169,7 +169,7 @@ namespace WintabDN
 
             try
             {
-                int size = (int)CWintabFuncs.WTInfoA((uint)contextIndex_I, 0, buf);
+                int size = (int)CWintabFuncs.WTInfo((uint)contextIndex_I, 0, buf);
 
                 context.LogContext = CMemUtils.MarshalUnmanagedBuf<WintabLogContext>(buf, size);
             }
@@ -194,7 +194,7 @@ namespace WintabDN
 
             try
             {
-                int size = (int)CWintabFuncs.WTInfoA(
+                int size = (int)CWintabFuncs.WTInfo(
                     (uint)EWTICategoryIndex.WTI_DEFCONTEXT, 
                     (uint)EWTIContextIndex.CTX_DEVICE, buf);
 
@@ -223,7 +223,7 @@ namespace WintabDN
 
             try
             {
-                int size = (int)CWintabFuncs.WTInfoA(
+                int size = (int)CWintabFuncs.WTInfo(
                     (uint)(EWTICategoryIndex.WTI_DEVICES + devIndex_I), 
                     (uint)dim_I, buf);
 
@@ -252,7 +252,7 @@ namespace WintabDN
 
             try
             {
-                int size = (int)CWintabFuncs.WTInfoA(
+                int size = (int)CWintabFuncs.WTInfo(
                     (uint)EWTICategoryIndex.WTI_DEVICES, 
                     (uint)EWTIDevicesIndex.DVC_ORIENTATION, buf);
 
@@ -283,7 +283,7 @@ namespace WintabDN
 
             try
             {
-                int size = (int)CWintabFuncs.WTInfoA(
+                int size = (int)CWintabFuncs.WTInfo(
                     (uint)EWTICategoryIndex.WTI_DEVICES, 
                     (uint)EWTIDevicesIndex.DVC_ROTATION, buf);
 
@@ -312,7 +312,7 @@ namespace WintabDN
 
             try
             {
-                int size = (int)CWintabFuncs.WTInfoA(
+                int size = (int)CWintabFuncs.WTInfo(
                     (uint)EWTICategoryIndex.WTI_INTERFACE, 
                     (uint)EWTIInterfaceIndex.IFC_NDEVICES, buf);
 
@@ -339,7 +339,7 @@ namespace WintabDN
 
             try
             {
-                int size = (int)CWintabFuncs.WTInfoA(
+                int size = (int)CWintabFuncs.WTInfo(
                     (uint)EWTICategoryIndex.WTI_INTERFACE,
                     (uint)EWTIInterfaceIndex.IFC_NDEVICES, buf);
 
@@ -368,7 +368,7 @@ namespace WintabDN
 
             try
             {
-                int size = (int)CWintabFuncs.WTInfoA(
+                int size = (int)CWintabFuncs.WTInfo(
                     (uint)index_I,
                     (uint)EWTICursorsIndex.CSR_NAME, buf);
 
@@ -408,7 +408,7 @@ namespace WintabDN
 
             try
             {
-                int size = (int)CWintabFuncs.WTInfoA(
+                int size = (int)CWintabFuncs.WTInfo(
                     (uint)EWTICategoryIndex.WTI_DEVICES,
                     (uint)devIdx, buf);
 
@@ -438,7 +438,7 @@ namespace WintabDN
 
             try
             {
-                int size = (int)CWintabFuncs.WTInfoA(
+                int size = (int)CWintabFuncs.WTInfo(
                     (uint)EWTICategoryIndex.WTI_DEVICES,
                     (uint)dimension_I, buf);
 

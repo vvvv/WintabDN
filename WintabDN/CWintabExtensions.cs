@@ -203,7 +203,7 @@ namespace WintabDN
         TABLET_ICON_FMT_4BPP_GRAY = 1      // 4bpp grayscale
     }
 
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     public struct WTExtensionPropertyBase
     {
         /// <summary>
@@ -245,7 +245,7 @@ namespace WintabDN
     /// <summary>
     /// Structure for reading/writing non-image Wintab extension data. (Wintab 1.4)
     /// </summary>
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     public struct WTExtensionProperty
     {
         public WTExtensionPropertyBase extBase;
@@ -263,7 +263,7 @@ namespace WintabDN
     /// <summary>
     /// Structure read/writing image Wintab extension data. (Wintab 1.4)
     /// </summary>
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     public struct WTExtensionImageProperty
     {
         public WTExtensionPropertyBase extBase;
@@ -307,7 +307,7 @@ namespace WintabDN
                 // Supported if extIndex != -1
                 if (extIndex != 0xFFFFFFFF)
                 {
-                    int size = (int)CWintabFuncs.WTInfoA(
+                    int size = (int)CWintabFuncs.WTInfo(
                         (uint)EWTICategoryIndex.WTI_EXTENSIONS + (uint)extIndex,
                         (uint)EWTIExtensionIndex.EXT_MASK, buf);
 
@@ -337,7 +337,7 @@ namespace WintabDN
         
             for (Int32 loopIdx = 0, size = -1; size != 0; loopIdx++)
             {
-                size = (int)CWintabFuncs.WTInfoA(
+                size = (int)CWintabFuncs.WTInfo(
                     (uint)EWTICategoryIndex.WTI_EXTENSIONS + (UInt32)loopIdx,
                     (uint)EWTIExtensionIndex.EXT_TAG, buf);
         
@@ -396,7 +396,7 @@ namespace WintabDN
 
             try
             {
-                bool status = CWintabFuncs.WTExtGet((UInt32)context_I, (UInt32)extTagIndex_I, buf);
+                bool status = CWintabFuncs.WTExtGet(context_I, (UInt32)extTagIndex_I, buf);
 
                 if (status)
                 {
@@ -460,7 +460,7 @@ namespace WintabDN
 
                 Marshal.StructureToPtr(extProperty, buf, false);
 
-                retStatus = CWintabFuncs.WTExtSet((UInt32)context_I, (UInt32)extTagIndex_I, buf);
+                retStatus = CWintabFuncs.WTExtSet(context_I, (UInt32)extTagIndex_I, buf);
             }
             catch (Exception ex)
             {
@@ -518,7 +518,7 @@ namespace WintabDN
 
                 Marshal.StructureToPtr(extProperty, buf, false);
 
-                retStatus = CWintabFuncs.WTExtSet((UInt32)context_I, (UInt32)extTagIndex_I, buf);
+                retStatus = CWintabFuncs.WTExtSet(context_I, (UInt32)extTagIndex_I, buf);
             }
             catch (Exception ex)
             {
@@ -588,7 +588,7 @@ namespace WintabDN
 
                 Marshal.StructureToPtr(extProperty, buf, false);
 
-                retStatus = CWintabFuncs.WTExtSet((UInt32)context_I, (UInt32)extTagIndex_I, buf);
+                retStatus = CWintabFuncs.WTExtSet(context_I, (UInt32)extTagIndex_I, buf);
             }
             catch (Exception ex)
             {

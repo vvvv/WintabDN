@@ -508,7 +508,7 @@ namespace FormExtTestApp
             if (eventArgs_I.Message.Msg == (Int32)EWintabEventMessage.WT_PACKETEXT)
             {
                 //Debug.WriteLine("Received WT_PACKETEXT");
-                WTPKT hCtx = (WTPKT)eventArgs_I.Message.LParam;
+                var hCtx = eventArgs_I.Message.LParam;
                 WTPKT pktID = (WTPKT)eventArgs_I.Message.WParam;
                 WintabPacketExt pktExt = m_wtData.GetDataPacketExt(hCtx, pktID);
 
@@ -946,7 +946,7 @@ namespace FormExtTestApp
         /// <param name="e"></param>
         private void ExtensionTestForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (mLogContext != null && mLogContext.HCtx != 0)
+            if (mLogContext != null && mLogContext.HCtx.IsValid)
             {
                 RemoveOverridesForTablet(mTabletIndexDefault);
                 mLogContext.Close();

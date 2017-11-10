@@ -123,7 +123,7 @@ namespace WintabDN
     /// <summary>
     /// Pen Orientation
     /// </summary>
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     public struct WTOrientation
     {
         /// <summary>
@@ -148,7 +148,7 @@ namespace WintabDN
     /// <summary>
     /// Pen Rotation
     /// </summary>
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     public struct WTRotation
     {
         /// <summary>
@@ -172,7 +172,7 @@ namespace WintabDN
     /// <summary>
     /// Wintab data packet.  Contains the "Full Monty" for all possible data values.
     /// </summary>
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     public struct WintabPacket
     {
         /// <summary>
@@ -262,7 +262,7 @@ namespace WintabDN
     /// <summary>
     /// Common properties for control extension data transactions.
     /// </summary>
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     public struct WTExtensionBase
     {
         /// <summary>
@@ -289,7 +289,7 @@ namespace WintabDN
     /// <summary>
     /// Extension data for one Express Key.
     /// </summary>
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     public struct WTExpKeyData
     {
         /// <summary>
@@ -321,7 +321,7 @@ namespace WintabDN
     /// <summary>
     /// Extension data for one touch ring or one touch strip.
     /// </summary>
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     public struct WTSliderData
     {
         /// <summary>
@@ -358,7 +358,7 @@ namespace WintabDN
     /// Note that tablets will have either Touch Rings or Touch Strips - not both.
     /// All tablets have Express Keys.
     /// </summary>
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     public struct WintabPacketExt
     {
         /// <summary>
@@ -485,7 +485,7 @@ namespace WintabDN
         /// <param name="hCtx_I">Wintab context to be used when asking for the data</param>
         /// <param name="pktID_I">Identifier for the tablet event packet to return.</param>
         /// <returns>Returns a data packet with non-null context if successful.</returns>
-        public WintabPacketExt GetDataPacketExt(UInt32 hCtx_I, UInt32 pktID_I)
+        public WintabPacketExt GetDataPacketExt(HCTX hCtx_I, UInt32 pktID_I)
         {
             int size = (int)(Marshal.SizeOf(new WintabPacketExt()));
             IntPtr buf = CMemUtils.AllocUnmanagedBuf(size);
@@ -510,7 +510,7 @@ namespace WintabDN
                 else
                 {
                     // If fails, make sure context is zero.
-                    packets[0].pkBase.nContext = 0;
+                    packets[0].pkBase.nContext = HCTX.Zero;
                 }
 
             }
@@ -521,8 +521,6 @@ namespace WintabDN
 
             return packets[0];
         }
-
-
 
         /// <summary>
         /// Returns one packet of WintabPacket data from the packet queue. (Deprecated)
@@ -542,7 +540,7 @@ namespace WintabDN
         /// <param name="hCtx_I">Wintab context to be used when asking for the data</param>
         /// <param name="pktID_I">Identifier for the tablet event packet to return.</param>
         /// <returns>Returns a data packet with non-null context if successful.</returns>
-        public WintabPacket GetDataPacket(UInt32 hCtx_I, UInt32 pktID_I)
+        public WintabPacket GetDataPacket(HCTX hCtx_I, UInt32 pktID_I)
         {
             IntPtr buf = CMemUtils.AllocUnmanagedBuf(Marshal.SizeOf(typeof(WintabPacket)));
             WintabPacket packet = new WintabPacket();
@@ -563,14 +561,11 @@ namespace WintabDN
                 //
                 // If fails, make sure context is zero.
                 //
-                packet.pkContext = 0;
-
+                packet.pkContext = HCTX.Zero;
             }
 
             return packet;
         }
-
-
 
         /// <summary>
         /// Removes all pending data packets from the context's queue.
@@ -676,7 +671,7 @@ namespace WintabDN
         /// </summary>
         private void CheckForValidHCTX(string msg)
         {
-            if (m_context.HCtx == 0)
+            if (!m_context.HCtx.IsValid)
             { 
                 throw new Exception(msg + " - Bad Context"); 
             }
