@@ -20,10 +20,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 using System;
 using System.Windows.Forms;
-using System.Collections.Generic;
-using System.Text;
 using System.Runtime.InteropServices;
-using System.Diagnostics;
 
 namespace WintabDN
 {
@@ -118,8 +115,6 @@ namespace WintabDN
         TBN_DOWN	    = 2
     }
 
-
-
     /// <summary>
     /// Pen Orientation
     /// </summary>
@@ -166,8 +161,6 @@ namespace WintabDN
         /// </summary>
         public Int32 rotYaw;
     }
-
-
 
     /// <summary>
     /// Wintab data packet.  Contains the "Full Monty" for all possible data values.
@@ -477,8 +470,6 @@ namespace WintabDN
             return numPkts;
         }
 
-
-
         /// <summary>
         /// Returns one packet of WintabPacketExt data from the packet queue.
         /// </summary>
@@ -512,7 +503,6 @@ namespace WintabDN
                     // If fails, make sure context is zero.
                     packets[0].pkBase.nContext = HCTX.Zero;
                 }
-
             }
             catch (Exception ex)
             {
@@ -531,8 +521,6 @@ namespace WintabDN
         {
             return GetDataPacket(m_context.HCtx, pktID_I);
         }
-
-
 
         /// <summary>
         /// Returns one packet of Wintab data from the packet queue.
@@ -582,8 +570,6 @@ namespace WintabDN
                 MessageBox.Show("FAILED GetPacketDataRange: " + ex.ToString());
             }
         }
-
-
 
         /// <summary>
         /// Returns an array of Wintab data packets from the packet queue.
@@ -664,7 +650,6 @@ namespace WintabDN
 
             return packets;
         }
-
 
         /// <summary>
         /// Throws exception if logical context for this data object is zero.

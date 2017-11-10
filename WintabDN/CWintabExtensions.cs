@@ -19,7 +19,6 @@
 // THE SOFTWARE.
 ///////////////////////////////////////////////////////////////////////////////
 using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
@@ -126,7 +125,6 @@ namespace WintabDN
         /// </summary>
         EXT_MAX = 210   // Allow 100 devices
     }
-
 
     /// <summary>
     /// Tablet property values used with WTExtGet and WTExtSet
@@ -258,8 +256,6 @@ namespace WintabDN
         public byte[] data;
     }
 
-
-
     /// <summary>
     /// Structure read/writing image Wintab extension data. (Wintab 1.4)
     /// </summary>
@@ -358,7 +354,6 @@ namespace WintabDN
             return extIndex;
         }
 
-
         /// <summary>
         /// Get a property value from an extension.
         /// </summary>
@@ -415,8 +410,6 @@ namespace WintabDN
             return retStatus;
         }
 
-
-
         /// <summary>
         /// Sets an extension control property value.
         /// </summary>
@@ -471,8 +464,6 @@ namespace WintabDN
 
             return retStatus;
         }
-
-
 
         /// <summary>
         /// Sets an extension control property string.
@@ -529,8 +520,6 @@ namespace WintabDN
 
             return retStatus;
         }
-
-
 
         /// <summary>
         /// Sets an extension control property image (if supported by tablet).
@@ -599,7 +588,6 @@ namespace WintabDN
 
             return retStatus;
         }
-
 
         /// <summary>
         /// Set tablet OLED display property.

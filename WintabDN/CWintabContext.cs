@@ -309,7 +309,6 @@ namespace WintabDN
             return status;
         }
 
-
         /// <summary>
         /// Logical Wintab context managed by this object.  
         /// </summary>
@@ -532,8 +531,6 @@ namespace WintabDN
         /// Specifies the system-cursor relative-mode sensitivity factor for the y axis.
         /// </summary>
         public FIX32 SysSensY   { get { return m_logContext.lcSysSensY; } set { m_logContext.lcSysSensY = value; } }
-
     }
-
 }
 

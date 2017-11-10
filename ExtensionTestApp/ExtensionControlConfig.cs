@@ -19,8 +19,6 @@
 // THE SOFTWARE.
 ///////////////////////////////////////////////////////////////////////////////
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Diagnostics;
 using System.Collections;
 using System.Windows.Forms;

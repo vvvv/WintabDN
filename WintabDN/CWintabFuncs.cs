@@ -19,8 +19,6 @@
 // THE SOFTWARE.
 ///////////////////////////////////////////////////////////////////////////////
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Runtime.InteropServices;
 
 namespace WintabDN
@@ -70,7 +68,6 @@ namespace WintabDN
         { return 0; }
         // \endcond IGNORED_BY_DOXYGEN
     }
-
 
     /// <summary>
     /// Managed implementation of Wintab WTPKT typedef.
@@ -202,7 +199,6 @@ namespace WintabDN
          IFC_NMANAGERS      = 10
     }
 
-
     /// <summary>
     /// Index values for WTI_DEVICES
     /// </summary>
@@ -265,7 +261,6 @@ namespace WintabDN
         CSR_NAME_PRESSURE_STYLUS    = EWTICategoryIndex.WTI_CURSORS + 1,
         CSR_NAME_ERASER             = EWTICategoryIndex.WTI_CURSORS + 2
     }
-
 
     /// <summary>
     /// Index values for WTI contexts.
@@ -476,5 +471,4 @@ namespace WintabDN
         [DllImport(DllFileName, CharSet = DllImportCharset)]
         public static extern bool WTExtSet(P_HCTX hctx_I, UInt32 extTag_I, IntPtr extData_I);
     }
-
 }

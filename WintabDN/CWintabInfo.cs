@@ -20,9 +20,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 using System;
 using System.Windows.Forms;
-using System.Collections.Generic;
-using System.Text;
-using System.Runtime.InteropServices;
 
 namespace WintabDN
 {
@@ -119,8 +116,6 @@ namespace WintabDN
 
             return context;
         }
-
-
 
         /// <summary>
         /// Returns the default system context, with useful context overrides.
@@ -270,7 +265,6 @@ namespace WintabDN
             return axisArray;
         }
 
-
         /// <summary>
         /// Returns a 3-element array describing the tablet's rotation range and resolution capabilities
         /// </summary>
@@ -355,7 +349,6 @@ namespace WintabDN
             return isStylusActive;
         }
 
-
         /// <summary>
         /// Returns a string containing the name of the selected stylus. 
         /// </summary>
@@ -390,8 +383,6 @@ namespace WintabDN
             return stylusName;
         }
 
-
-
         /// <summary>
         /// Return max normal pressure supported by tablet.
         /// </summary>
@@ -424,8 +415,6 @@ namespace WintabDN
             return pressureAxis.axMax;
         }
 
-
-
         /// <summary>
         /// Return the WintabAxis object for the specified dimension.
         /// </summary>
@@ -454,8 +443,4 @@ namespace WintabDN
             return axis;
         }
     }
-
-
-
-
 }
