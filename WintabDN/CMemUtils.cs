@@ -143,7 +143,7 @@ namespace WintabDN
 
                 Marshal.Copy(buf_I, byteArray, 0, size_I);
 
-                System.Text.Encoding encoding = System.Text.Encoding.UTF8;
+                System.Text.Encoding encoding = System.Text.Encoding.Unicode;
                 retStr = encoding.GetString(byteArray);
             }
             catch (Exception ex)

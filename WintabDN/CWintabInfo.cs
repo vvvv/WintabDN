@@ -72,7 +72,7 @@ namespace WintabDN
                 }
 
                 // Strip off final null character before marshalling.
-                devInfo = CMemUtils.MarshalUnmanagedString(buf, size-1);
+                devInfo = CMemUtils.MarshalUnmanagedString(buf, size-2);
             }
             catch (Exception ex)
             {
@@ -371,7 +371,7 @@ namespace WintabDN
                 }
 
                 // Strip off final null character before marshalling.
-                stylusName = CMemUtils.MarshalUnmanagedString(buf, size-1);
+                stylusName = CMemUtils.MarshalUnmanagedString(buf, size-2);
             }
             catch (Exception ex)
             {
