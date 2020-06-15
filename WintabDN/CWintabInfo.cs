@@ -39,14 +39,7 @@ namespace WintabDN
             IntPtr buf = IntPtr.Zero;
             bool status = false;
 
-            try
-            {
-                status = (CWintabFuncs.WTInfo(0, 0, buf) > 0);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("FAILED IsWintabAvailable: " + ex.ToString());
-            }
+            status = (CWintabFuncs.WTInfo(0, 0, buf) > 0);
 
             return status;
         }
@@ -74,12 +67,11 @@ namespace WintabDN
                 // Strip off final null character before marshalling.
                 devInfo = CMemUtils.MarshalUnmanagedString(buf, size-2);
             }
-            catch (Exception ex)
+            finally
             {
-                MessageBox.Show("FAILED GetDeviceInfo: " + ex.ToString());
+                CMemUtils.FreeUnmanagedBuf(buf);
             }
 
-            CMemUtils.FreeUnmanagedBuf(buf);
             return devInfo;
         }
 
@@ -168,12 +160,10 @@ namespace WintabDN
 
                 context.LogContext = CMemUtils.MarshalUnmanagedBuf<WintabLogContext>(buf, size);
             }
-            catch (Exception ex)
+            finally
             {
-                MessageBox.Show("FAILED GetDefaultContext: " + ex.ToString());
+                CMemUtils.FreeUnmanagedBuf(buf);
             }
-
-            CMemUtils.FreeUnmanagedBuf(buf);
 
             return context;
         }
@@ -195,12 +185,10 @@ namespace WintabDN
 
                 devIndex = CMemUtils.MarshalUnmanagedBuf<Int32>(buf, size);
             }
-            catch (Exception ex)
+            finally
             {
-                MessageBox.Show("FAILED GetDefaultDeviceIndex: " + ex.ToString());
+                CMemUtils.FreeUnmanagedBuf(buf);
             }
-
-            CMemUtils.FreeUnmanagedBuf(buf);
 
             return devIndex;
         }
@@ -225,12 +213,10 @@ namespace WintabDN
                 // If size == 0, then returns a zeroed struct.
                 axis = CMemUtils.MarshalUnmanagedBuf<WintabAxis>(buf, size);
             }
-            catch (Exception ex)
+            finally
             {
-                MessageBox.Show("FAILED GetDeviceAxis: " + ex.ToString());
+                CMemUtils.FreeUnmanagedBuf(buf);
             }
-
-            CMemUtils.FreeUnmanagedBuf(buf);
 
             return axis;
         }
@@ -255,12 +241,10 @@ namespace WintabDN
                 axisArray = CMemUtils.MarshalUnmanagedBuf<WintabAxisArray>(buf, size);
                 tiltSupported_O = (axisArray.array[0].axResolution != 0 && axisArray.array[1].axResolution != 0);
             }
-            catch (Exception ex)
+            finally
             {
-                MessageBox.Show("FAILED GetDeviceOrientation: " + ex.ToString());
+                CMemUtils.FreeUnmanagedBuf(buf);
             }
-
-            CMemUtils.FreeUnmanagedBuf(buf);
 
             return axisArray;
         }
@@ -285,12 +269,10 @@ namespace WintabDN
                 axisArray = CMemUtils.MarshalUnmanagedBuf<WintabAxisArray>(buf, size);
                 rotationSupported_O = (axisArray.array[0].axResolution != 0 && axisArray.array[1].axResolution != 0);                
             }
-            catch (Exception ex)
+            finally
             {
-                MessageBox.Show("FAILED GetDeviceRotation: " + ex.ToString());
+                CMemUtils.FreeUnmanagedBuf(buf);
             }
-
-            CMemUtils.FreeUnmanagedBuf(buf);
 
             return axisArray;
         }
@@ -312,12 +294,10 @@ namespace WintabDN
 
                 numDevices = CMemUtils.MarshalUnmanagedBuf<UInt32>(buf, size);
             }
-            catch (Exception ex)
+            finally
             {
-                MessageBox.Show("FAILED GetNumberOfDevices: " + ex.ToString());
+                CMemUtils.FreeUnmanagedBuf(buf);
             }
-
-            CMemUtils.FreeUnmanagedBuf(buf);
 
             return numDevices;
         }
@@ -339,12 +319,10 @@ namespace WintabDN
 
                 isStylusActive = CMemUtils.MarshalUnmanagedBuf<bool>(buf, size);
             }
-            catch (Exception ex)
+            finally
             {
-                MessageBox.Show("FAILED GetNumberOfDevices: " + ex.ToString());
+                CMemUtils.FreeUnmanagedBuf(buf);
             }
-
-            CMemUtils.FreeUnmanagedBuf(buf);
 
             return isStylusActive;
         }
@@ -373,12 +351,10 @@ namespace WintabDN
                 // Strip off final null character before marshalling.
                 stylusName = CMemUtils.MarshalUnmanagedString(buf, size-2);
             }
-            catch (Exception ex)
+            finally
             {
-                MessageBox.Show("FAILED GetDeviceInfo: " + ex.ToString());
+                CMemUtils.FreeUnmanagedBuf(buf);
             }
-
-            CMemUtils.FreeUnmanagedBuf(buf);
 
             return stylusName;
         }
@@ -405,12 +381,10 @@ namespace WintabDN
 
                 pressureAxis = CMemUtils.MarshalUnmanagedBuf<WintabAxis>(buf, size);
             }
-            catch (Exception ex)
+            finally
             {
-                MessageBox.Show("FAILED GetMaxPressure: " + ex.ToString());
+                CMemUtils.FreeUnmanagedBuf(buf);
             }
-
-            CMemUtils.FreeUnmanagedBuf(buf);
 
             return pressureAxis.axMax;
         }
@@ -433,12 +407,10 @@ namespace WintabDN
 
                 axis = CMemUtils.MarshalUnmanagedBuf<WintabAxis>(buf, size);
             }
-            catch (Exception ex)
+            finally
             {
-                MessageBox.Show("FAILED GetMaxPressure: " + ex.ToString());
+                CMemUtils.FreeUnmanagedBuf(buf);
             }
-
-            CMemUtils.FreeUnmanagedBuf(buf);
 
             return axis;
         }

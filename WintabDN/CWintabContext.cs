@@ -196,14 +196,7 @@ namespace WintabDN
         /// <returns>Returns non-zero context handle if successful.</returns>
         public HCTX Open(HWND hwnd_I, bool enable_I)
         {
-            try
-            { 
-                m_hCTX = CWintabFuncs.WTOpen(hwnd_I, ref m_logContext, enable_I);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("FAILED OpenContext: " + ex.ToString());
-            }
+            m_hCTX = CWintabFuncs.WTOpen(hwnd_I, ref m_logContext, enable_I);
 
             return m_hCTX;
         }
@@ -218,14 +211,7 @@ namespace WintabDN
             // static (global) object, so there's only one of these at a time.
             HWND hwnd = MessageEvents.WindowHandle;
 
-            try
-            {
-                m_hCTX = CWintabFuncs.WTOpen(hwnd, ref m_logContext, true);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("FAILED OpenContext: " + ex.ToString());
-            }
+            m_hCTX = CWintabFuncs.WTOpen(hwnd, ref m_logContext, true);
 
             return m_hCTX.IsValid;
         }
@@ -238,21 +224,14 @@ namespace WintabDN
         {
             bool status = false;
 
-            try
+            if (!m_hCTX.IsValid)
             {
-                if (!m_hCTX.IsValid)
-                {
-                    throw new Exception("CloseContext: invalid context");
-                }
+                throw new Exception("CloseContext: invalid context");
+            }
 
-                status = CWintabFuncs.WTClose(m_hCTX);
-                m_hCTX = HCTX.Zero;
-                m_logContext = new WintabLogContext();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("FAILED CloseContext: " + ex.ToString());
-            }
+            status = CWintabFuncs.WTClose(m_hCTX);
+            m_hCTX = HCTX.Zero;
+            m_logContext = new WintabLogContext();
 
             return status;
         }
@@ -266,19 +245,12 @@ namespace WintabDN
         {
             bool status = false;
 
-            try
+            if (!m_hCTX.IsValid)
             {
-                if (!m_hCTX.IsValid)
-                {
-                    throw new Exception("EnableContext: invalid context");
-                }
+                throw new Exception("EnableContext: invalid context");
+            }
 
-                status = CWintabFuncs.WTEnable(m_hCTX, enable_I);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("FAILED EnableContext: " + ex.ToString());
-            }
+            status = CWintabFuncs.WTEnable(m_hCTX, enable_I);
 
             return status;
         }
@@ -292,19 +264,12 @@ namespace WintabDN
         {
             bool status = false;
 
-            try
+            if (!m_hCTX.IsValid)
             {
-                if (!m_hCTX.IsValid)
-                {
-                    throw new Exception("EnableContext: invalid context");
-                }
+                throw new Exception("EnableContext: invalid context");
+            }
 
-                status = CWintabFuncs.WTOverlap(m_hCTX, toTop_I);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("FAILED SetContextOverlapOrder: " + ex.ToString());
-            }
+            status = CWintabFuncs.WTOverlap(m_hCTX, toTop_I);
 
             return status;
         }

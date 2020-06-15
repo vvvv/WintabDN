@@ -310,12 +310,10 @@ namespace WintabDN
                     extMask = (UInt32)CMemUtils.MarshalUnmanagedBuf<UInt32>(buf, size);
                 }
             }
-            catch (Exception ex)
+            finally
             {
-                MessageBox.Show("FAILED GetWTExtensionMask: " + ex.ToString());
+                CMemUtils.FreeUnmanagedBuf(buf);
             }
-        
-            CMemUtils.FreeUnmanagedBuf(buf);
         
             return extMask;
         }
@@ -330,26 +328,31 @@ namespace WintabDN
             UInt32 thisTag = 0;
             UInt32 extIndex = 0xFFFFFFFF;
             IntPtr buf = CMemUtils.AllocUnmanagedBuf(thisTag);
-        
-            for (Int32 loopIdx = 0, size = -1; size != 0; loopIdx++)
+
+            try
             {
-                size = (int)CWintabFuncs.WTInfo(
-                    (uint)EWTICategoryIndex.WTI_EXTENSIONS + (UInt32)loopIdx,
-                    (uint)EWTIExtensionIndex.EXT_TAG, buf);
-        
-                if (size > 0)
+                for (Int32 loopIdx = 0, size = -1; size != 0; loopIdx++)
                 {
-                    thisTag = CMemUtils.MarshalUnmanagedBuf<UInt32>(buf, size);
+                    size = (int)CWintabFuncs.WTInfo(
+                        (uint)EWTICategoryIndex.WTI_EXTENSIONS + (UInt32)loopIdx,
+                        (uint)EWTIExtensionIndex.EXT_TAG, buf);
         
-                    if ((EWTXExtensionTag)thisTag == tag_I)
+                    if (size > 0)
                     {
-                        extIndex = (UInt32)loopIdx;
-                        break;
+                        thisTag = CMemUtils.MarshalUnmanagedBuf<UInt32>(buf, size);
+        
+                        if ((EWTXExtensionTag)thisTag == tag_I)
+                        {
+                            extIndex = (UInt32)loopIdx;
+                            break;
+                        }
                     }
                 }
             }
-        
-            CMemUtils.FreeUnmanagedBuf(buf);
+            finally
+            {
+                CMemUtils.FreeUnmanagedBuf(buf);
+            }
         
             return extIndex;
         }
@@ -400,12 +403,10 @@ namespace WintabDN
                     retStatus = true;
                 }
             }
-            catch (Exception ex)
+            finally
             {
-                MessageBox.Show("FAILED ControlPropertyGet: " + ex.ToString());
+                CMemUtils.FreeUnmanagedBuf(buf);
             }
-
-            CMemUtils.FreeUnmanagedBuf(buf);
 
             return retStatus;
         }
@@ -455,12 +456,10 @@ namespace WintabDN
 
                 retStatus = CWintabFuncs.WTExtSet(context_I, (UInt32)extTagIndex_I, buf);
             }
-            catch (Exception ex)
+            finally
             {
-                MessageBox.Show(ex.ToString());
+                CMemUtils.FreeUnmanagedBuf(buf);
             }
-
-            CMemUtils.FreeUnmanagedBuf(buf);
 
             return retStatus;
         }
@@ -511,12 +510,10 @@ namespace WintabDN
 
                 retStatus = CWintabFuncs.WTExtSet(context_I, (UInt32)extTagIndex_I, buf);
             }
-            catch (Exception ex)
+            finally
             {
-                MessageBox.Show(ex.ToString());
+                CMemUtils.FreeUnmanagedBuf(buf);
             }
-
-            CMemUtils.FreeUnmanagedBuf(buf);
 
             return retStatus;
         }
@@ -553,7 +550,7 @@ namespace WintabDN
 
                 if (newImage == null)
                 {
-                    MessageBox.Show("Oops - couldn't find/read image: " + imageFilePath_I);
+                    //MessageBox.Show("Oops - couldn't find/read image: " + imageFilePath_I);
                     return false;
                 }
 
@@ -579,12 +576,10 @@ namespace WintabDN
 
                 retStatus = CWintabFuncs.WTExtSet(context_I, (UInt32)extTagIndex_I, buf);
             }
-            catch (Exception ex)
+            finally
             {
-                MessageBox.Show(ex.ToString());
+                CMemUtils.FreeUnmanagedBuf(buf);
             }
-
-            CMemUtils.FreeUnmanagedBuf(buf);
 
             return retStatus;
         }
@@ -616,51 +611,44 @@ namespace WintabDN
                 return false;
             }
 
-            try
+            if (!CWintabExtensions.ControlPropertyGet(
+                context_I.HCtx,
+                (byte)extTagIndex_I,
+                (byte)tabletIndex_I,
+                (byte)controlIndex_I,
+                (byte)functionIndex_I,
+                (ushort)EWTExtensionTabletProperty.TABLET_PROPERTY_ICON_FORMAT,
+                ref iconFmt))
+            { throw new Exception("Oops - Failed ControlPropertyGet for TABLET_PROPERTY_ICON_FORMAT"); }
+
+            if ((EWTExtensionIconProperty)iconFmt != EWTExtensionIconProperty.TABLET_ICON_FMT_NONE)
             {
+                // Get the width and height of the display icon.
+                UInt32 iconWidth = 0;
+                UInt32 iconHeight = 0;
+
                 if (!CWintabExtensions.ControlPropertyGet(
                     context_I.HCtx,
                     (byte)extTagIndex_I,
                     (byte)tabletIndex_I,
                     (byte)controlIndex_I,
                     (byte)functionIndex_I,
-                    (ushort)EWTExtensionTabletProperty.TABLET_PROPERTY_ICON_FORMAT,
-                    ref iconFmt))
-                { throw new Exception("Oops - Failed ControlPropertyGet for TABLET_PROPERTY_ICON_FORMAT"); }
+                    (ushort)EWTExtensionTabletProperty.TABLET_PROPERTY_ICON_WIDTH,
+                    ref iconWidth))
+                { throw new Exception("Oops - Failed ControlPropertyGet for TABLET_PROPERTY_ICON_WIDTH"); }
 
-                if ((EWTExtensionIconProperty)iconFmt != EWTExtensionIconProperty.TABLET_ICON_FMT_NONE)
-                {
-                    // Get the width and height of the display icon.
-                    UInt32 iconWidth = 0;
-                    UInt32 iconHeight = 0;
+                if (!CWintabExtensions.ControlPropertyGet(
+                    context_I.HCtx,
+                    (byte)extTagIndex_I,
+                    (byte)tabletIndex_I,
+                    (byte)controlIndex_I,
+                    (byte)functionIndex_I,
+                    (ushort)EWTExtensionTabletProperty.TABLET_PROPERTY_ICON_HEIGHT,
+                    ref iconHeight))
+                { throw new Exception("Oops - Failed ControlPropertyGet for TABLET_PROPERTY_ICON_HEIGHT"); }
 
-                    if (!CWintabExtensions.ControlPropertyGet(
-                        context_I.HCtx,
-                        (byte)extTagIndex_I,
-                        (byte)tabletIndex_I,
-                        (byte)controlIndex_I,
-                        (byte)functionIndex_I,
-                        (ushort)EWTExtensionTabletProperty.TABLET_PROPERTY_ICON_WIDTH,
-                        ref iconWidth))
-                    { throw new Exception("Oops - Failed ControlPropertyGet for TABLET_PROPERTY_ICON_WIDTH"); }
-
-                    if (!CWintabExtensions.ControlPropertyGet(
-                        context_I.HCtx,
-                        (byte)extTagIndex_I,
-                        (byte)tabletIndex_I,
-                        (byte)controlIndex_I,
-                        (byte)functionIndex_I,
-                        (ushort)EWTExtensionTabletProperty.TABLET_PROPERTY_ICON_HEIGHT,
-                        ref iconHeight))
-                    { throw new Exception("Oops - Failed ControlPropertyGet for TABLET_PROPERTY_ICON_HEIGHT"); }
-
-                    return SetIcon(context_I, extTagIndex_I, tabletIndex_I, controlIndex_I, functionIndex_I, imageFilePath_I);
+                return SetIcon(context_I, extTagIndex_I, tabletIndex_I, controlIndex_I, functionIndex_I, imageFilePath_I);
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
 
             // Not supported by tablet.
             return false;
